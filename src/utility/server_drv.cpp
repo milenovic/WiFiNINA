@@ -225,6 +225,33 @@ uint8_t ServerDrv::getClientState(uint8_t sock)
    return _data;
 }
 
+uint8_t ServerDrv::handshakeTLS(uint8_t sock)
+{
+	WAIT_FOR_SLAVE_SELECT();
+    // Send Command
+    SpiDrv::sendCmd(TLS_HANDSHAKE_CMD, PARAM_NUMS_1);
+    SpiDrv::sendParam(&sock, sizeof(sock), LAST_PARAM);
+
+    // pad to multiple of 4
+    SpiDrv::readChar();
+    SpiDrv::readChar();
+
+    SpiDrv::spiSlaveDeselect();
+    //Wait the reply elaboration
+    SpiDrv::waitForSlaveReady();
+    SpiDrv::spiSlaveSelect();
+
+    // Wait for reply
+    uint8_t _data = 0;
+    uint8_t _dataLen = 0;
+    if (!SpiDrv::waitResponseCmd(TLS_HANDSHAKE_CMD, PARAM_NUMS_1, &_data, &_dataLen))
+    {
+        WARN("error waitResponse");
+    }
+    SpiDrv::spiSlaveDeselect();
+   return _data;
+}
+
 uint16_t ServerDrv::availData(uint8_t sock)
 {
     if (!SpiDrv::available()) {

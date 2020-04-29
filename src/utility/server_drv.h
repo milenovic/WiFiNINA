@@ -45,6 +45,8 @@ public:
 
     static uint8_t getClientState(uint8_t sock);
 
+    static uint8_t handshakeTLS(uint8_t sock);
+
     static bool getData(uint8_t sock, uint8_t *data, uint8_t peek = 0);
 
     static bool getDataBuf(uint8_t sock, uint8_t *data, uint16_t *len);

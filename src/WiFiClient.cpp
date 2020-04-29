@@ -272,3 +272,11 @@ uint16_t  WiFiClient::remotePort()
   uint16_t port = (_remotePort[0]<<8)+_remotePort[1];
   return port;
 }
+
+uint8_t WiFiClient::doTLS() {
+    if (_sock == 255) {
+    return CLOSED;
+  } else {
+    return ServerDrv::handshakeTLS(_sock);
+  }
+}

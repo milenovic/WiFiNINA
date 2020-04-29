@@ -97,7 +97,7 @@ enum {
 	SEND_DATA_TCP_CMD		= 0x44,
     GET_DATABUF_TCP_CMD		= 0x45,
     INSERT_DATABUF_CMD		= 0x46,
-
+	TLS_HANDSHAKE_CMD		= 0x47,
     // regular format commands
     SET_PIN_MODE		= 0x50,
     SET_DIGITAL_WRITE	= 0x51,
